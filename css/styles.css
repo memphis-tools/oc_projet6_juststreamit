@@ -1,0 +1,207 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Dosis', sans-serif;
+  color: black;
+  background-color: #FFF;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+nav {
+  background-color: #4E6E81;
+  color: #F6F1F1;
+  text-transform: uppercase;
+  position: fixed;
+  z-index: 1;
+  height: 65px;
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+}
+
+.nav_container {
+  width: 75%;
+}
+
+.nav_container ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+}
+
+.nav_container li {
+  text-decoration: none;
+  padding-left: 10px;
+}
+
+.nav_container li a {
+  text-decoration: none;
+}
+
+.nav_container li a:link,
+.nav_container li a:visited,
+.nav_container li a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+.nav_container li a:hover {
+  color: #fff;
+  transition-duration: 0.4s;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #FFF;
+  background-position: center;
+  background-size: cover;
+}
+
+.section_title {
+  text-align: center;
+  color: #000;
+  padding: 15px 0 15px 0;
+}
+
+.left_arrow,
+.right_arrow {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 2em;
+}
+
+.best_movie_container,
+.movies_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.best_movie {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+
+#section_best_movie {
+  padding-top: 75px;
+}
+
+#section_star_movie_content{
+  width: 1020px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border: 2px solid black;
+}
+
+#star_movie_info {
+  display: flex;
+  flex-direction: column;
+}
+
+#play_best_movie_bt {
+  width: 65px;
+  height: 25px;
+  color: white;
+  background-color: red;
+  border: none;
+  border-radius: 25px;
+  margin: 10px 5px;
+  cursor: pointer;
+}
+
+#best_movie_img_id {
+  width: 200px;
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.right_arrow a{
+  text-decoration: none;
+}
+
+.left_arrow a{
+  text-decoration: none;
+}
+
+/* The Modal (background) */
+.modal {
+ display: none;
+ position: fixed;
+ z-index: 2;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: auto%;
+ overflow: auto;
+}
+
+/* Modal Content/Box */
+#modal-content {
+  background-color: #2E3840;
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 85%;
+  color: white;
+}
+
+#modal-content p {
+  padding: 10px 20px;
+}
+
+/* The Close Button */
+.close {
+ color: #aaa;
+ float: right;
+ font-size: 28px;
+ font-weight: bold;
+ padding-right: 5px;
+}
+
+.close:hover,
+.close:focus {
+ color: black;
+ text-decoration: none;
+ cursor: pointer;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.footer_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 65px;
+  background-color: #4E6E81;
+  margin-bottom: 0;
+  z-index: 1;
+}
