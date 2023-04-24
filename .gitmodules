@@ -1,3 +1,3 @@
-[submodule "OCMovies-API-EN-FR"]
-	path = OCMovies-API-EN-FR
+[submodule "movies_api_project"]
+	path = movies_api_project
 	url = https://github.com/memphis-tools/OCMovies-API-EN-FR
