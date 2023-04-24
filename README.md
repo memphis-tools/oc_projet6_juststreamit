@@ -17,7 +17,7 @@ Interagir avec une API REST. Développer la partie Front-End d’une application
 ## Comment utiliser le projet ?
 1. Clone the repository
 
-      `git clone --recursive https://github.com/memphis-tools/oc_projet6_juststreamit.git`
+      `git clone --recurse-submodules https://github.com/memphis-tools/oc_projet6_juststreamit.git`
 
       `cd oc_projet6_juststreamit`
 
@@ -33,7 +33,7 @@ Interagir avec une API REST. Développer la partie Front-End d’une application
       
 3. Prepare the local API and expose it
 
-      `cd OCMovies-API-EN-FR`
+      `cd movies_api_project`
       
       `python manage.py create_db`
 
