@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet">
   <!-- axios -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   <!-- vanilla js (2 declarations forcées pour éviter problème chargement) -->
   <script>var exports = {};var SharedArrayBuffer = {}</script>
   <script src="https://cdn.jsdelivr.net/npm/vanillajs@1.0.1/dest/cjs/index.min.js"></script>
@@ -31,18 +31,18 @@
     </header>
     <main>
       <!-- La modale -->
-      <section id="section_modal">
+      <div id="section_modal">
         <div id="movie_modal" class="modal">
           <div id="modal-content">
             <span class="close">&times;</span>
           </div>
         </div>
-      </section>
+      </div>
       <!-- Fin de la modale -->
       <section id="section_best_movie">
         <div id="section_star_movie_content">
           <div id="star_movie_info">
-            <div id="star_movie_title"></div>
+            <h2 id="star_movie_title">Best movie</h2>
             <div id="star_movie_description"></div>
             <button id="play_best_movie_bt">PLAY</button>
           </div>
@@ -52,35 +52,35 @@
         </div>
       </section>
       <section id="section_best_movies">
-        <div class="section_title">Best Movies</div>
+        <h2 class="section_title">Best Movies</h2>
         <div class="movies_container">
-          <div class="left_arrow" id="left_arrow_categorie_0"><a href="#"><</a></div>
+          <div class="left_arrow" id="left_arrow_categorie_0"><a href="#">&lt;</a></div>
           <div id="carroussel_categorie_0"></div>
-          <div class="right_arrow" id="right_arrow_categorie_0"><a href="#">></a></div>
+          <div class="right_arrow" id="right_arrow_categorie_0"><a href="#">&gt;</a></div>
         </div>
       </section>
       <section id="section_categorie_1">
-        <div class="section_title">Action Movies</div>
+        <h2 class="section_title">Action Movies</h2>
         <div class="movies_container">
-          <div class="left_arrow" id="left_arrow_categorie_1"><a href="#"><</a></div>
+          <div class="left_arrow" id="left_arrow_categorie_1"><a href="#">&lt;</a></div>
           <div id="carroussel_categorie_1"></div>
-          <div class="right_arrow" id="right_arrow_categorie_1"><a href="#">></a></div>
+          <div class="right_arrow" id="right_arrow_categorie_1"><a href="#">&gt;</a></div>
         </div>
       </section>
       <section id="section_categorie_2">
-        <div class="section_title">Adventure Movies</div>
+        <h2 class="section_title">Adventure Movies</h2>
         <div class="movies_container">
-          <div class="left_arrow" id="left_arrow_categorie_2"><a href="#"><</a></div>
+          <div class="left_arrow" id="left_arrow_categorie_2"><a href="#">&lt;</a></div>
           <div id="carroussel_categorie_2"></div>
-          <div class="right_arrow" id="right_arrow_categorie_2"><a href="#">></a></div>
+          <div class="right_arrow" id="right_arrow_categorie_2"><a href="#">&gt;</a></div>
         </div>
       </section>
       <section id="section_categorie_3">
-        <div class="section_title">Biography Movies</div>
+        <h2 class="section_title">Biography Movies</h2>
         <div class="movies_container">
-          <div class="left_arrow" id="left_arrow_categorie_3"><a href="#"><</a></div>
+          <div class="left_arrow" id="left_arrow_categorie_3"><a href="#">&lt;</a></div>
           <div id="carroussel_categorie_3"></div>
-          <div class="right_arrow" id="right_arrow_categorie_3"><a href="#">></a></div>
+          <div class="right_arrow" id="right_arrow_categorie_3"><a href="#">&gt;</a></div>
         </div>
       </section>
     </main>
@@ -90,6 +90,6 @@
       </div>
     </footer>
   </div>
-  <script type="text/javascript" src="./js/projet6.js"></script>
+  <script src="./js/projet6.js"></script>
 </body>
 </html>
