@@ -5,7 +5,7 @@ let footer_date = new Date();
 // les listes sont actualisées lors de l'usage des boutons "< (precedents) / > (suivants)"
 let displayed_categories_number = 4;
 // on limite le nombre d'éléments par caroussel
-let displayed_movies_number = 7;
+let page_size = 7;
 
 let carroussel_categorie_0 = [];
 let carroussel_categorie_1 = [];
@@ -188,13 +188,11 @@ function create_movie_button(new_movie) {
 function update_carroussel(section_name, data, update=false) {
   // c'est la "fonction callback" qu'on appelle après chargement d'une requete réussie par axios
   // c'est elle qui appelera la fonction "update_star_movie" une fois la "catégorie 0" (films les mieux notés) actualisée
-  let i = 0;
   if(update == true) {
     document.getElementById(section_name).innerHTML = "";
   }
   for (movie of data.results) {
     // on va limiter le nombre de films affichés
-    if (i < displayed_movies_number) {
       // instanciation à minima, 1ère ciconstance d'instantication. Pour le carroussel seules les images sont nécessaires.
       // 1 seul modèle de classe Movie pour 2 circonstances. Là on aura des champs undefined (non utilisés)
       // la 2ème circonstance est au moment de la création de la modale (utilisateur clique sur une vignette de film d'un carroussel)
@@ -207,9 +205,6 @@ function update_carroussel(section_name, data, update=false) {
       // on met à jour la visualisation. Chaque vignette de film déclenchera l'apparition de la modale (méthode onclick).
       movie_a = create_movie_button(new_movie)
       document.getElementById(`${section_name}`).appendChild(movie_a);
-
-      i += 1;
-    }
   }
   if (`${section_name}` == "carroussel_categorie_0" && update==false) {
     update_star_movie(eval(`${section_name}[0]`))
@@ -248,7 +243,7 @@ function update_carroussel_current_page(carroussel_name, current_page_number) {
 function axios_get_request(carroussel_name) {
   // axios instancie un objet Prommise.
   // une fois la requete GET réussie, on peut déclencher notre evenement, içi la mise à jour du carroussel d'une catégorie
-  axios.get(`${BASE_URL}/api/v1/titles/?${request}&page=${current_page_number}&page_size=10`)
+  axios.get(`${BASE_URL}/api/v1/titles/?${request}&page=${current_page_number}&page_size=${page_size}`)
    .then(response => update_carroussel(carroussel_name,response.data, update=true));
 }
 
@@ -283,8 +278,8 @@ window.onload = function() {
   var modal = document.getElementById("movie_modal");
   var modal_content = document.getElementById("modal-content");
   // axios est utilsé pour effectuer autant de requetes GET que d'éléments dans la structure de données "movies_genre_list"
-  // on utilise le page_size=10 pour obtenir 10 résultats au lieu des 5 par défaut (OCMovies-API-EN-FR/api/v1/titles/pagination.py)
-  axios.all(movies_genre_list.map((carroussel) => axios.get(`${BASE_URL}/api/v1/titles/?${carroussel['carroussel_request']}&page=1&page_size=10`)
+  // on utilise le page_size=7 pour obtenir 7 résultats au lieu des 5 par défaut (OCMovies-API-EN-FR/api/v1/titles/pagination.py)
+  axios.all(movies_genre_list.map((carroussel) => axios.get(`${BASE_URL}/api/v1/titles/?${carroussel['carroussel_request']}&page=1&page_size=${page_size}`)
     .then(response => update_carroussel(carroussel['carroussel_name'],response.data))));
 
   // on assigne dynamiquemment des fonctions en utilisant des patterns existantes
