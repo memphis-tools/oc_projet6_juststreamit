@@ -4,6 +4,9 @@ let footer_date = new Date();
 // la requete par défaut de l'API renvoit 5 films. Chaque liste aura 5 éléments.
 // les listes sont actualisées lors de l'usage des boutons "< (precedents) / > (suivants)"
 let displayed_categories_number = 4;
+// on limite le nombre d'éléments par caroussel
+let displayed_movies_number = 7;
+
 let carroussel_categorie_0 = [];
 let carroussel_categorie_1 = [];
 let carroussel_categorie_2 = [];
@@ -31,9 +34,9 @@ let attributes_list = [
 // on définit cette structure de données dans le but d'éviter des répétitions.
 let movies_genre_list = [
   {"carroussel_name": "carroussel_categorie_0", "carroussel_request": "sort_by=-imdb_score", "current_page": 1},
-  {"carroussel_name": "carroussel_categorie_1", "carroussel_request": "genre=action", "current_page": 1},
-  {"carroussel_name": "carroussel_categorie_2", "carroussel_request": "genre=adventure", "current_page": 1},
-  {"carroussel_name": "carroussel_categorie_3", "carroussel_request": "genre=biography", "current_page": 1},
+  {"carroussel_name": "carroussel_categorie_1", "carroussel_request": "genre=animation", "current_page": 1},
+  {"carroussel_name": "carroussel_categorie_2", "carroussel_request": "genre=drama", "current_page": 1},
+  {"carroussel_name": "carroussel_categorie_3", "carroussel_request": "genre=thriller", "current_page": 1},
 ];
 
 class Movie {
@@ -69,11 +72,13 @@ function fullfill_best_movie_modal(data) {
 function fullfill_movie_modal(data) {
   // "fonction callback" qu'on appelle après chargement d'une requete réussie par fetch pour tous films
   let temp = ""
+  temp += `<div class=""><img src=${data.image_url}></div><div><p>`
   for (attribute in data) {
     if (Object.keys(movie_labels_dict).includes(attribute)) {
       temp += movie_labels_dict[attribute] + ": " + eval(`data.${attribute}`)+ "<br>";
     }
   }
+  temp += '</p></div>'
   return temp;
 }
 
@@ -100,15 +105,15 @@ function mask_and_purge_modal(modal, modal_content) {
   }
 }
 
-function fetch_get_request(new_movie_id, new_p, is_star_movie=false) {
+function fetch_get_request(new_movie_id, new_div, is_star_movie=false) {
   if (is_star_movie == false) {
     fetch(`${BASE_URL}/api/v1/titles/${new_movie_id}`)
       .then((response) => response.json())
-      .then((responseJSON) => {new_p.innerHTML += fullfill_movie_modal(responseJSON)});
+      .then((responseJSON) => {new_div.innerHTML += fullfill_movie_modal(responseJSON)});
   } else {
     fetch(`${BASE_URL}/api/v1/titles/${new_movie_id}`)
       .then((response) => response.json())
-      .then((responseJSON) => {new_p.innerHTML += fullfill_best_movie_modal(responseJSON)});
+      .then((responseJSON) => {new_div.innerHTML += fullfill_best_movie_modal(responseJSON)});
   }
 }
 
@@ -117,11 +122,13 @@ function create_modal(new_movie_id) {
   var modal_content = document.getElementById("modal-content");
   //  on vérifie que la modale n'est pas déjà fermée
   if (window.getComputedStyle(modal).display === "none") {
-    new_p = document.createElement("p");
-    fetch_get_request(new_movie_id, new_p)
+    new_div = document.createElement("div");
+    new_div.className = "modal_movie_image";
+    fetch_get_request(new_movie_id, new_div)
+
 
     // on met à jour le contenu de la modale
-    modal_content.appendChild(new_p)
+    modal_content.appendChild(new_div)
 
     // on affiche  la modale
     modal.style.display = "block";
@@ -186,18 +193,23 @@ function update_carroussel(section_name, data, update=false) {
     document.getElementById(section_name).innerHTML = "";
   }
   for (movie of data.results) {
-    // instanciation à minima, 1ère ciconstance d'instantication. Pour le carroussel seules les images sont nécessaires.
-    // 1 seul modèle de classe Movie pour 2 circonstances. Là on aura des champs undefined (non utilisés)
-    // la 2ème circonstance est au moment de la création de la modale (utilisateur clique sur une vignette de film d'un carroussel)
-    // dans cette 2ème circontance la requete GET est spécifique au film et permettra de renseigner tous les attributs de notre classe Movie.
-    new_movie = instantiate_movie(movie)
+    // on va limiter le nombre de films affichés
+    if (i < displayed_movies_number) {
+      // instanciation à minima, 1ère ciconstance d'instantication. Pour le carroussel seules les images sont nécessaires.
+      // 1 seul modèle de classe Movie pour 2 circonstances. Là on aura des champs undefined (non utilisés)
+      // la 2ème circonstance est au moment de la création de la modale (utilisateur clique sur une vignette de film d'un carroussel)
+      // dans cette 2ème circontance la requete GET est spécifique au film et permettra de renseigner tous les attributs de notre classe Movie.
+      new_movie = instantiate_movie(movie)
 
-    // on met à jour la structure de données correspondate à la catégorie de film en cours de visualisation
-    eval(`${section_name}`).push(new_movie);
+      // on met à jour la structure de données correspondate à la catégorie de film en cours de visualisation
+      eval(`${section_name}`).push(new_movie);
 
-    // on met à jour la visualisation. Chaque vignette de film déclenchera l'apparition de la modale (méthode onclick).
-    movie_a = create_movie_button(new_movie)
-    document.getElementById(`${section_name}`).appendChild(movie_a);
+      // on met à jour la visualisation. Chaque vignette de film déclenchera l'apparition de la modale (méthode onclick).
+      movie_a = create_movie_button(new_movie)
+      document.getElementById(`${section_name}`).appendChild(movie_a);
+
+      i += 1;
+    }
   }
   if (`${section_name}` == "carroussel_categorie_0" && update==false) {
     update_star_movie(eval(`${section_name}[0]`))
@@ -236,7 +248,7 @@ function update_carroussel_current_page(carroussel_name, current_page_number) {
 function axios_get_request(carroussel_name) {
   // axios instancie un objet Prommise.
   // une fois la requete GET réussie, on peut déclencher notre evenement, içi la mise à jour du carroussel d'une catégorie
-  axios.get(`${BASE_URL}/api/v1/titles/?${request}&page=${current_page_number}`)
+  axios.get(`${BASE_URL}/api/v1/titles/?${request}&page=${current_page_number}&page_size=10`)
    .then(response => update_carroussel(carroussel_name,response.data, update=true));
 }
 
@@ -271,7 +283,8 @@ window.onload = function() {
   var modal = document.getElementById("movie_modal");
   var modal_content = document.getElementById("modal-content");
   // axios est utilsé pour effectuer autant de requetes GET que d'éléments dans la structure de données "movies_genre_list"
-  axios.all(movies_genre_list.map((carroussel) => axios.get(`${BASE_URL}/api/v1/titles/?${carroussel['carroussel_request']}&page=1`)
+  // on utilise le page_size=10 pour obtenir 10 résultats au lieu des 5 par défaut (OCMovies-API-EN-FR/api/v1/titles/pagination.py)
+  axios.all(movies_genre_list.map((carroussel) => axios.get(`${BASE_URL}/api/v1/titles/?${carroussel['carroussel_request']}&page=1&page_size=10`)
     .then(response => update_carroussel(carroussel['carroussel_name'],response.data))));
 
   // on assigne dynamiquemment des fonctions en utilisant des patterns existantes
