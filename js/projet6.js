@@ -1,7 +1,7 @@
 const BASE_URL = "http://127.0.0.1:8000";
 let footer_date = new Date();
 // pour chaque catégorie affichée on prévoit une liste des instances de classe Movie
-// la requete par défaut de l'API renvoit 5 films. Chaque liste aura 5 éléments.
+// la requete par défaut de l'API renvoit 5 films. On choisit d'avoir une liste avec 7 éléments.
 // les listes sont actualisées lors de l'usage des boutons "< (precedents) / > (suivants)"
 let displayed_categories_number = 4;
 // on limite le nombre d'éléments par caroussel
